@@ -2,12 +2,9 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
-
-    //Vector3 right = new Vector3(0.1f, 0, 0);
     Vector3 up = new Vector3(0, 0,1f);
-
-
-	// Use this for initialization
+    public int gamestatus = 1;
+    
 	void Start () {
 	
 	}
@@ -40,6 +37,7 @@ public class PlayerController : MonoBehaviour {
     float speed = 8;
     void OnTriggerEnter(Collider other)
     {
+        gamestatus = 0;
         Object.Destroy(this.gameObject);
     }
     void Update()
