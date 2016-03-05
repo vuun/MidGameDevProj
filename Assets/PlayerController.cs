@@ -4,8 +4,11 @@ using System.Collections;
 public class PlayerController : MonoBehaviour {
     Vector3 up = new Vector3(0, 0,1f);
     public int gamestatus = 1;
-    
-	void Start () {
+
+    public Camera frontCam;
+    public Camera backCam;
+
+    void Start () {
 	
 	}
 
@@ -35,11 +38,14 @@ public class PlayerController : MonoBehaviour {
     }*/
     float rotateSpeed = 100;
     float speed = 8;
+
     void OnTriggerEnter(Collider other)
     {
-        gamestatus = 0;
-        Object.Destroy(this.gameObject);
+        //gamestatus = 0;
+        //Object.Destroy(this.gameObject);
+        
     }
+
     void Update()
     {
         float transAmount = speed * Time.deltaTime;
@@ -58,11 +64,11 @@ public class PlayerController : MonoBehaviour {
         }
         if (Input.GetKey("q"))
         {
-            transform.Rotate(0, -rotateAmount, 0);
+            transform.Rotate(0, -rotateAmount/20f, 0);
         }
         if (Input.GetKey("e"))
         {
-            transform.Rotate(0, rotateAmount, 0);
+            transform.Rotate(0, rotateAmount/20f, 0);
         }
 
         if (Input.GetKey("a"))
@@ -77,12 +83,28 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey("down"))
         {
-            speed -= 1;
+            if (speed >= 30f)
+            {
+                speed -= 0.75f;
+            }
         }
 
         if (Input.GetKey("up"))
         {
-            speed += 1;
+            if (speed <= 45f) { 
+                speed += 0.25f;
+            }
+        }
+
+        if (Input.GetKey("f"))
+        {
+            frontCam.gameObject.SetActive(false);
+            backCam.gameObject.SetActive(true);
+        }
+        else
+        {
+            backCam.gameObject.SetActive(false);
+            frontCam.gameObject.SetActive(true);
         }
 
     }
