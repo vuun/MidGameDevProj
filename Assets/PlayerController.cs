@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
+    public GameObject Player;
     Vector3 up = new Vector3(0, 0,1f);
     public int gamestatus = 1;
 
@@ -38,16 +39,28 @@ public class PlayerController : MonoBehaviour {
     }*/
     float rotateSpeed = 100;
     float speed = 8;
+    void OnCollisionStay(Collision collisionInfo)
+    {
+        foreach (ContactPoint contact in collisionInfo.contacts)
+        {
+            Debug.DrawRay(contact.point, contact.normal * 10, Color.white);
+        }
+        Debug.Log(this.gameObject +""+ this.speed );
+        this.transform.position = new Vector3(173,157,-542);
 
+
+    }
     void OnTriggerEnter(Collider other)
     {
         //gamestatus = 0;
         //Object.Destroy(this.gameObject);
-        
+        Debug.Log(this.gameObject);
+
     }
 
     void Update()
     {
+
         float transAmount = speed * Time.deltaTime;
         float rotateAmount = rotateSpeed * Time.deltaTime;
         if (speed >= 10f)
@@ -56,7 +69,7 @@ public class PlayerController : MonoBehaviour {
         }
         if(speed <= 0f)
         {
-            speed = 0f;
+            speed = 0.0f;
         }
         transform.Translate(0, 0, (transAmount * 2));
 
@@ -91,12 +104,12 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey("down"))
         {
             
-                speed -= 0.45f;
+                speed -= 0.25f;
         }
 
         if (Input.GetKey("up"))
         {
-                speed += 0.05f;
+                speed += 0.09f;
 
         }
 
