@@ -50,7 +50,14 @@ public class PlayerController : MonoBehaviour {
     {
         float transAmount = speed * Time.deltaTime;
         float rotateAmount = rotateSpeed * Time.deltaTime;
-
+        if (speed >= 10f)
+        {
+            speed = 10f;
+        }
+        if(speed <= 0f)
+        {
+            speed = 0f;
+        }
         transform.Translate(0, 0, (transAmount * 2));
 
         if (Input.GetKey("w"))
@@ -83,17 +90,14 @@ public class PlayerController : MonoBehaviour {
 
         if (Input.GetKey("down"))
         {
-            if (speed >= 30f)
-            {
-                speed -= 0.75f;
-            }
+            
+                speed -= 0.45f;
         }
 
         if (Input.GetKey("up"))
         {
-            if (speed <= 45f) { 
-                speed += 0.25f;
-            }
+                speed += 0.05f;
+
         }
 
         if (Input.GetKey("f"))
