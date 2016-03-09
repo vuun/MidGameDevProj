@@ -5,14 +5,21 @@ public class PlayerController : MonoBehaviour {
     public GameObject Player;
     Vector3 up = new Vector3(0, 0,1f);
     public int gamestatus = 1;
+    float maxspeed = 20f;
+
+    public GameObject Bomb;
+    public GameObject Booster;
+
+    private ParticleSystem ps;
 
     public Camera frontCam;
     public Camera backCam;
 
     void Start () {
-	
-	}
+        ps = Booster.gameObject.GetComponent<ParticleSystem>();
 
+    }
+    
     // Update is called once per frame
     /*void Update () {
         PlayerControl();
@@ -39,38 +46,39 @@ public class PlayerController : MonoBehaviour {
     }*/
     float rotateSpeed = 100;
     float speed = 8;
-    void OnCollisionStay(Collision collisionInfo)
-    {
-        foreach (ContactPoint contact in collisionInfo.contacts)
-        {
-            Debug.DrawRay(contact.point, contact.normal * 10, Color.white);
-        }
-        Debug.Log(this.gameObject +""+ this.speed );
-        this.transform.position = new Vector3(173,157,-542);
 
-
-    }
     void OnTriggerEnter(Collider other)
     {
-        //gamestatus = 0;
+        gamestatus = 0;
         //Object.Destroy(this.gameObject);
-        Debug.Log(this.gameObject);
+        if(other.tag == "Terrain") {
+            Debug.Log(this.gameObject + " speed = " + this.speed);
+            Instantiate(Bomb,this.gameObject.transform.position, this.transform.rotation);
+            this.transform.position = new Vector3(173, 157, -542);
+            this.transform.rotation = Quaternion.identity;
+        }
+
 
     }
-
+    void speedcheck()
+    {
+        if (speed >= maxspeed)
+        {
+            speed = maxspeed;
+        }
+        if (speed <= 0f)
+        {
+            speed = 0f;
+        }
+    }
     void Update()
     {
 
         float transAmount = speed * Time.deltaTime;
         float rotateAmount = rotateSpeed * Time.deltaTime;
-        if (speed >= 10f)
-        {
-            speed = 10f;
-        }
-        if(speed <= 0f)
-        {
-            speed = 0.0f;
-        }
+
+        speedcheck();
+
         transform.Translate(0, 0, (transAmount * 2));
 
         if (Input.GetKey("w"))
