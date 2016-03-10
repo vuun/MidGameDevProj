@@ -60,6 +60,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Follower.cs" />
+    <Compile Include="Assets\FreeCameraRotate.cs" />
     <Compile Include="Assets\MeteorController.cs" />
     <Compile Include="Assets\MeteorSpawner.cs" />
     <Compile Include="Assets\PlayerController.cs" />
