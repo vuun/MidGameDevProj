@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{63D32890-A640-21BA-8A2F-DDECB5868389}</ProjectGuid>
+    <ProjectGuid>{0A350C0F-D031-D298-5483-8D8067254419}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\MeteorController.cs" />
+     <Compile Include="Assets\MeteorSpawner.cs" />
      <Compile Include="Assets\PlayerController.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Program files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
