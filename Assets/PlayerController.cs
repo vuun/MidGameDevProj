@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour {
 
     void Start () {
         ps = Booster.gameObject.GetComponent<ParticleSystem>();
+            this.transform.position = new Vector3(173, 157, -424);
 
     }
     
@@ -59,7 +60,7 @@ public class PlayerController : MonoBehaviour {
             gamestatus = 0;
             Debug.Log(this.gameObject + " speed = " + this.speed + "gamestatus = " + gamestatus);
             Instantiate(Bomb, this.gameObject.transform.position, this.transform.rotation);
-            this.transform.position = new Vector3(173, 157, -524);
+            this.transform.position = new Vector3(173, 157, -424);
             this.transform.rotation = Quaternion.identity;
         }
 

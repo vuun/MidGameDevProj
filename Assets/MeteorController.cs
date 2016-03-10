@@ -11,10 +11,10 @@ public class MeteorController : MonoBehaviour {
     void Start ()
     {
         //PlayerController = Player.GetComponent<PlayerController>();
-        Vector3 pos = new Vector3(Random.Range(-40, 426), Random.Range(200, 300), Random.Range(-400, 70));
+        Vector3 pos = new Vector3(Random.Range(-40, 426), Random.Range(400, 500), Random.Range(-400, 70));
         transform.position = pos;
         transform.localScale = size;
-        rb.velocity = new Vector3(0,Random.Range(-80,-30),0);
+        rb.velocity = new Vector3(0,Random.Range(-100,-50),0);
 	}
 	
 	// Update is called once per frame
