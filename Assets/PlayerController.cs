@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour {
 
     void Start () {
         ps = Booster.gameObject.GetComponent<ParticleSystem>();
+        this.transform.position = new Vector3(173, 157, -424);
 
     }
     
@@ -55,11 +56,14 @@ public class PlayerController : MonoBehaviour {
     {
         gamestatus = 0;
         //Object.Destroy(this.gameObject);
+        if (other.tag == "Terrain")
+        {
         Debug.Log(this.gameObject + " speed = " + this.speed);
         Instantiate(Bomb,this.gameObject.transform.position, this.transform.rotation);
         this.transform.position = new Vector3(173, 157, -424);
         this.transform.rotation = Quaternion.identity;
-
+        }
+        
         if (other.tag == "wall")
         {
             Text1.gameObject.SetActive(true);
