@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour {
     public GameObject Player;
     Vector3 up = new Vector3(0, 0,1f);
     public int gamestatus = 1;
-    float maxspeed = 20f;
+    float maxspeed = 40f;
 
     public GameObject Bomb;
     public GameObject Booster;
@@ -55,12 +55,10 @@ public class PlayerController : MonoBehaviour {
     {
         gamestatus = 0;
         //Object.Destroy(this.gameObject);
-        if(other.tag == "Terrain") {
-            Debug.Log(this.gameObject + " speed = " + this.speed);
-            Instantiate(Bomb,this.gameObject.transform.position, this.transform.rotation);
-            this.transform.position = new Vector3(173, 157, -542);
-            this.transform.rotation = Quaternion.identity;
-        }
+        Debug.Log(this.gameObject + " speed = " + this.speed);
+        Instantiate(Bomb,this.gameObject.transform.position, this.transform.rotation);
+        this.transform.position = new Vector3(173, 157, -424);
+        this.transform.rotation = Quaternion.identity;
 
         if (other.tag == "wall")
         {
@@ -75,9 +73,9 @@ public class PlayerController : MonoBehaviour {
         {
             speed = maxspeed;
         }
-        if (speed <= 0f)
+        if (speed <= 5f)
         {
-            speed = 0f;
+            speed = 5f;
         }
     }
     void Update()
