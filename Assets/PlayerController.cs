@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour {
 
     public Camera frontCam;
     public Camera backCam;
+    public Camera FreeCam;
 
     float textTime = 0;
 
@@ -172,11 +173,19 @@ public class PlayerController : MonoBehaviour {
             {
                 frontCam.gameObject.SetActive(false);
                 backCam.gameObject.SetActive(true);
+                FreeCam.gameObject.SetActive(false);
             }
-            else
+            else if(Input.GetKey("j") || Input.GetKey("k") || Input.GetKey("l") || Input.GetKey("i"))
+            {
+                backCam.gameObject.SetActive(false);
+                frontCam.gameObject.SetActive(false);
+                FreeCam.gameObject.SetActive(true);
+            }
+            else 
             {
                 backCam.gameObject.SetActive(false);
                 frontCam.gameObject.SetActive(true);
+                FreeCam.gameObject.SetActive(false);
             }
         }
     }
