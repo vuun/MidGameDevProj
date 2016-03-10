@@ -53,12 +53,15 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        gamestatus = 0;
         //Object.Destroy(this.gameObject);
-        Debug.Log(this.gameObject + " speed = " + this.speed);
-        Instantiate(Bomb,this.gameObject.transform.position, this.transform.rotation);
-        this.transform.position = new Vector3(173, 157, -424);
-        this.transform.rotation = Quaternion.identity;
+        if (other.tag == "Terrain")
+        {
+            gamestatus = 0;
+            Debug.Log(this.gameObject + " speed = " + this.speed + "gamestatus = " + gamestatus);
+            Instantiate(Bomb, this.gameObject.transform.position, this.transform.rotation);
+            this.transform.position = new Vector3(173, 157, -524);
+            this.transform.rotation = Quaternion.identity;
+        }
 
         if (other.tag == "wall")
         {
@@ -80,7 +83,10 @@ public class PlayerController : MonoBehaviour {
     }
     void Update()
     {
-
+        if(this.transform.position == new Vector3(173, 157, -522))
+        {
+            gamestatus = 1;
+        }
         if (Time.realtimeSinceStartup >= textTime + 3.5)
         {
             Text1.gameObject.SetActive(false);
