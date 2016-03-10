@@ -3,6 +3,7 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
     public GameObject Player;
+    public GameObject starwar;
     Vector3 up = new Vector3(0, 0,1f);
     public int gamestatus = 1;
     float maxspeed = 40f;
@@ -97,8 +98,21 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    void soundcheck()
+    {
+        if(gamestatus == 0)
+        {
+            starwar.gameObject.SetActive(false);
+        }
+        else if(gamestatus == 1)
+        {
+            starwar.gameObject.SetActive(true);
+        }
+    }
+
     void Update()
     {
+        soundcheck();
         retrycheck();
         if (Time.realtimeSinceStartup >= textTime + 3.5)
         {
