@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour {
     public GameObject Bomb;
     public GameObject Booster;
 
-    public GameObject Text1;
+    public GameObject warningText;
+    public GameObject retryText;
 
     private ParticleSystem ps;
 
@@ -54,19 +55,22 @@ public class PlayerController : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
+
         //Object.Destroy(this.gameObject);
         if (other.tag == "Terrain")
         {
             gamestatus = 0;
+            retryText.gameObject.SetActive(true);
             Debug.Log(this.gameObject + " speed = " + this.speed + "gamestatus = " + gamestatus);
             Instantiate(Bomb, this.gameObject.transform.position, this.transform.rotation);
-            this.transform.position = new Vector3(173, 80, -380);
+            this.transform.position = new Vector3(0, 0, 0);
             this.transform.rotation = Quaternion.identity;
+            speed = 0;
         }
 
         if (other.tag == "wall")
         {
-            Text1.gameObject.SetActive(true);
+            warningText.gameObject.SetActive(true);
             textTime = Time.realtimeSinceStartup;
         }
 
@@ -82,15 +86,23 @@ public class PlayerController : MonoBehaviour {
             speed = 5f;
         }
     }
+    void retrycheck()
+    {
+        if (Input.GetKey("x") && gamestatus == 0)
+        {
+            gamestatus = 2;
+            this.transform.position = new Vector3(173, 80, -380);
+            this.transform.rotation = Quaternion.identity;
+            retryText.gameObject.SetActive(false);
+        }
+    }
+
     void Update()
     {
-        if(this.transform.position == new Vector3(173, 157, -522))
-        {
-            gamestatus = 1;
-        }
+        retrycheck();
         if (Time.realtimeSinceStartup >= textTime + 3.5)
         {
-            Text1.gameObject.SetActive(false);
+            warningText.gameObject.SetActive(false);
         }
 
 
@@ -100,57 +112,58 @@ public class PlayerController : MonoBehaviour {
         speedcheck();
 
         transform.Translate(0, 0, (transAmount * 2));
+        if (gamestatus == 1)
+        {
+            if (Input.GetKey("w"))
+            {
+                transform.Rotate(rotateAmount, 0, 0);
 
-        if (Input.GetKey("w"))
-        {
-            transform.Rotate(rotateAmount, 0, 0);
+            }
+            if (Input.GetKey("s"))
+            {
+                transform.Rotate(-rotateAmount, 0, 0);
+            }
+            if (Input.GetKey("q"))
+            {
+                transform.Rotate(0, -rotateAmount / 20f, 0);
+            }
+            if (Input.GetKey("e"))
+            {
+                transform.Rotate(0, rotateAmount / 20f, 0);
+            }
 
-        }
-        if (Input.GetKey("s"))
-        {
-            transform.Rotate(-rotateAmount, 0, 0);
-        }
-        if (Input.GetKey("q"))
-        {
-            transform.Rotate(0, -rotateAmount/20f, 0);
-        }
-        if (Input.GetKey("e"))
-        {
-            transform.Rotate(0, rotateAmount/20f, 0);
-        }
+            if (Input.GetKey("a"))
+            {
+                transform.Rotate(0, 0, rotateAmount);
+            }
 
-        if (Input.GetKey("a"))
-        {
-            transform.Rotate(0, 0, rotateAmount);
-        }
+            if (Input.GetKey("d"))
+            {
+                transform.Rotate(0, 0, -rotateAmount);
+            }
 
-        if (Input.GetKey("d"))
-        {
-            transform.Rotate(0, 0, -rotateAmount);
-        }
+            if (Input.GetKey("down"))
+            {
 
-        if (Input.GetKey("down"))
-        {
-            
                 speed -= 0.25f;
-        }
+            }
 
-        if (Input.GetKey("up"))
-        {
+            if (Input.GetKey("up"))
+            {
                 speed += 0.09f;
 
-        }
+            }
 
-        if (Input.GetKey("f"))
-        {
-            frontCam.gameObject.SetActive(false);
-            backCam.gameObject.SetActive(true);
+            if (Input.GetKey("f"))
+            {
+                frontCam.gameObject.SetActive(false);
+                backCam.gameObject.SetActive(true);
+            }
+            else
+            {
+                backCam.gameObject.SetActive(false);
+                frontCam.gameObject.SetActive(true);
+            }
         }
-        else
-        {
-            backCam.gameObject.SetActive(false);
-            frontCam.gameObject.SetActive(true);
-        }
-
     }
 }
