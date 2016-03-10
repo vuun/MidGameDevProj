@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MeteorSpawner : MonoBehaviour {
     public GameObject met;
-    double delay = 0.12;
+    double delay = 0.1;
 	double sec = 0;
 	// Use this for initialization
 	void Start () {

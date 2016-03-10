@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class MeteorController : MonoBehaviour {
-    Vector3 size =new Vector3(40,40,40);
+    Vector3 size =new Vector3(50,40,50);
     //public GameObject met;
     public Rigidbody rb;
     //public GameObject Player;
@@ -11,7 +11,7 @@ public class MeteorController : MonoBehaviour {
     void Start ()
     {
         //PlayerController = Player.GetComponent<PlayerController>();
-        Vector3 pos = new Vector3(Random.Range(-40, 426), Random.Range(400, 500), Random.Range(-400, 70));
+        Vector3 pos = new Vector3(Random.Range(-180, 600), Random.Range(400, 500), Random.Range(-550, 200));
         transform.position = pos;
         transform.localScale = size;
         rb.velocity = new Vector3(0,Random.Range(-100,-50),0);
