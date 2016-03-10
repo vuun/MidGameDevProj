@@ -10,10 +10,14 @@ public class PlayerController : MonoBehaviour {
     public GameObject Bomb;
     public GameObject Booster;
 
+    public GameObject Text1;
+
     private ParticleSystem ps;
 
     public Camera frontCam;
     public Camera backCam;
+
+    float textTime = 0;
 
     void Start () {
         ps = Booster.gameObject.GetComponent<ParticleSystem>();
@@ -58,6 +62,11 @@ public class PlayerController : MonoBehaviour {
             this.transform.rotation = Quaternion.identity;
         }
 
+        if (other.tag == "wall")
+        {
+            Text1.gameObject.SetActive(true);
+            textTime = Time.realtimeSinceStartup;
+        }
 
     }
     void speedcheck()
@@ -73,6 +82,12 @@ public class PlayerController : MonoBehaviour {
     }
     void Update()
     {
+
+        if (Time.realtimeSinceStartup >= textTime + 3.5)
+        {
+            Text1.gameObject.SetActive(false);
+        }
+
 
         float transAmount = speed * Time.deltaTime;
         float rotateAmount = rotateSpeed * Time.deltaTime;
