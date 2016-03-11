@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
     public GameObject Player;
@@ -8,8 +9,17 @@ public class PlayerController : MonoBehaviour {
     public int gamestatus = 1;
     float maxspeed = 40f;
 
+
+
     public GameObject Bomb;
     public GameObject Booster;
+
+    public GameObject shield;
+    public GameObject shieldTextObject;
+    public Text shieldText;
+    int shieldtime = 0;
+    int shieldCooldown = 0;
+    int isShield = 2;
 
     public GameObject warningText;
     public GameObject retryText;
@@ -24,7 +34,12 @@ public class PlayerController : MonoBehaviour {
 
     void Start () {
         ps = Booster.gameObject.GetComponent<ParticleSystem>();
-            this.transform.position = new Vector3(173, 80, -380);
+        this.transform.position = new Vector3(173, 80, -380);
+
+        isShield = 1;
+        shield.gameObject.SetActive(true);
+        shieldCooldown = (int)(Time.realtimeSinceStartup) + 15;
+        shieldtime = (int)(Time.realtimeSinceStartup);
 
     }
     
@@ -59,7 +74,7 @@ public class PlayerController : MonoBehaviour {
     {
 
         //Object.Destroy(this.gameObject);
-        if (other.tag == "Terrain")
+        if ((other.tag == "Obstacle" && isShield != 1 )||(other.tag == "Terrain"))
         {
             gamestatus = 0;
             retryText.gameObject.SetActive(true);
@@ -68,6 +83,8 @@ public class PlayerController : MonoBehaviour {
             this.transform.position = new Vector3(0, 0, 0);
             this.transform.rotation = Quaternion.identity;
             speed = 0;
+            isShield = 0;
+            
         }
 
         if (other.tag == "wall")
@@ -93,6 +110,12 @@ public class PlayerController : MonoBehaviour {
         if (Input.GetKey("x") && gamestatus == 0)
         {
             gamestatus = 2;
+            isShield = 1;
+
+            shield.gameObject.SetActive(true);
+            shieldCooldown = (int)(Time.realtimeSinceStartup) + 15;
+            shieldtime = (int)(Time.realtimeSinceStartup);
+
             this.transform.position = new Vector3(173, 80, -380);
             this.transform.rotation = Quaternion.identity;
             retryText.gameObject.SetActive(false);
@@ -110,7 +133,39 @@ public class PlayerController : MonoBehaviour {
             starwar.gameObject.SetActive(true);
         }
     }
+    void shieldcheck()
+    {
+        //Debug.Log("status " + isShield);
+        if (Input.GetKeyDown("space") && isShield == 2 && ((shieldCooldown - (int)Time.realtimeSinceStartup <= 0)))
+        {
+            isShield = 1;
+            shield.gameObject.SetActive(true);
+            shieldtime = (int)(Time.realtimeSinceStartup);
+            shieldCooldown = (int)(Time.realtimeSinceStartup) + 15;
+            //shieldTextObject.gameObject.SetActive(true);
+        }
 
+        //Debug.Log("shieldCooldownnow : "+(shieldCooldown - (int)Time.realtimeSinceStartup));
+        if (isShield == 1)
+        {
+            shieldText.text = "Shield On!! : " + (4 - ((int)(Time.realtimeSinceStartup) - shieldtime));
+        }
+
+        else if ((isShield == 0 && (shieldCooldown - (int)Time.realtimeSinceStartup) <= 0) || isShield == 2)
+        {
+            isShield = 2;
+            shieldText.text = "      Shield Up";
+        }
+
+        if ((shieldtime + 4.5 <= Time.realtimeSinceStartup && isShield != 2) || isShield == 0)
+        {
+            isShield = 0;
+            shieldText.text = "Shield CoolDown : " + (shieldCooldown - (int)Time.realtimeSinceStartup);
+            Debug.Log("NOTICE ME SENPAI");
+            shield.gameObject.SetActive(false);
+            //shieldTextObject.gameObject.SetActive(false);
+        }
+    }
     void Update()
     {
         soundcheck();
@@ -125,8 +180,12 @@ public class PlayerController : MonoBehaviour {
         float rotateAmount = rotateSpeed * Time.deltaTime;
 
         speedcheck();
+        shieldcheck();
 
         transform.Translate(0, 0, (transAmount * 2));
+        
+
+
         if (gamestatus == 1)
         {
             if (Input.GetKey("w"))
@@ -161,11 +220,13 @@ public class PlayerController : MonoBehaviour {
             {
 
                 speed -= 0.25f;
+                Booster.gameObject.SetActive(false);
             }
 
             if (Input.GetKey("up"))
             {
                 speed += 0.09f;
+                Booster.gameObject.SetActive(true);
 
             }
 

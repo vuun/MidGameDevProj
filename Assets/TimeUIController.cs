@@ -36,7 +36,7 @@ public class TimeUIController : MonoBehaviour {
 
         //Debug.Log("gamestatus = " +  playerScript.gamestatus);
 
-            if (playerScript.gamestatus == 2)
+        if (playerScript.gamestatus == 2 || playerScript.gamestatus == 3)
         {
             lastTime = (int)Time.realtimeSinceStartup;
             playerScript.gamestatus = 1;
